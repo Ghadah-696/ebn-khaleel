@@ -7,18 +7,26 @@
 @import "tailwindcss";
 
 @theme {
-	--color-espresso: #4A2C20;
+	/* --color-espresso: #4A2C20;
 	--color-coffee: #8B5E3C;
 	--color-cream: #FAF5EC;
 	--color-sand: #EFE4D2;
 	--color-gold: #C08A3E;
 	--color-sage: #4F5D4A;
-	--color-ink: #2A1B14;
+	--color-ink: #2A1B14; */
+	 --color-cream-warm: #F6EEDF;
+  --color-walnut: #3B2218;
+  --color-caramel: #6B3F26;
+  --color-espresso-deep: #26150E;
+  --color-sand-deep: #EAD9BD;
+  --color-gold-soft: #B98A4E;
+  --color-burnt: #9A4B2B;
 
 	--font-body: "IBM Plex Sans Arabic", sans-serif;
 	--font-heading: "Alexandria", sans-serif;
 	--font-quote: "Amiri", serif;
 }
+ 
 
 @layer base {
 	:root {
