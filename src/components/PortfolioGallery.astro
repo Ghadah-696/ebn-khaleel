@@ -3,7 +3,9 @@ import { Image } from "astro:assets";
 import { works } from "../data/works";
 ---
 
-<section class="works-section" id="portfolio" aria-labelledby="works-title" data-portfolio-gallery>
+<!-- <section class="works-section" id="portfolio" aria-labelledby="works-title" data-portfolio-gallery> -->
+ <section class="works-band" id="portfolio" aria-labelledby="works-title" data-portfolio-gallery>
+<div class="works-section">
 	<header class="works-header">
 		<p class="works-kicker">01 / {String(works.length).padStart(2, "0")}</p>
 		<h2 id="works-title">الأعمال</h2>
@@ -33,7 +35,8 @@ import { works } from "../data/works";
 							alt={work.alt ?? ""}
 							width={work.image.width}
 							height={work.image.height}
-							widths={[480, 720, 960]}
+							// widths={[480, 720, 960]}
+							widths={[640, 960, 1280]}
 							sizes="(min-width: 1024px) 50vw, 100vw"
 							format="webp"
 							loading={index === 0 ? "eager" : "lazy"}
@@ -53,6 +56,7 @@ import { works } from "../data/works";
 				</button>
 			</article>
 		))}
+	</div>
 	</div>
 </section>
 
@@ -134,10 +138,14 @@ import { works } from "../data/works";
 </script>
 
 <style>
+	.works-band {
+	background: var(--color-walnut);
+	color: var(--color-cream);
+}
 	.works-section {
-		max-width: 60rem;
-		margin-inline: auto;
-		padding: clamp(3rem, 7vw, 6rem) clamp(1.25rem, 4vw, 4rem) 8rem;
+		max-width: 76rem;
+	margin-inline: auto;
+	padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4rem);
 	}
 
 	.works-header {
@@ -148,13 +156,16 @@ import { works } from "../data/works";
 		margin-block-end: clamp(2rem, 4vw, 3.5rem);
 		margin-inline: auto;
 		padding-block-end: 1rem;
-		border-block-end: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+		/* border-block-end: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent); */
+
+border-block-end: 1px solid color-mix(in srgb, var(--color-gold-soft) 45%, transparent);
 		text-align: center;
 	}
 
 	.works-kicker {
 		margin: auto;
-		color: var(--color-coffee);
+		/* color: var(--color-coffee); */
+		color: var(--color-gold);
 		font-size: 0.78rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
@@ -162,18 +173,18 @@ import { works } from "../data/works";
 
 	.works-header h2 {
 		margin: 0;
-		color: var(--color-espresso);
+		color: var(--color-cream);
 		font-family: var(--font-heading);
 		font-size: clamp(2rem, 5vw, 4rem);
 		font-weight: 700;
-		letter-spacing: -0.07em;
+		letter-spacing:0;
 		line-height: 1;
 	}
 
 	.works-subtitle {
 		max-width: 28rem;
 		margin: 0.25rem 0 0;
-		color: var(--color-coffee);
+		color: var(--color-sand);
 		font-size: 0.95rem;
 		line-height: 1.8;
 	}
@@ -207,7 +218,9 @@ import { works } from "../data/works";
 		display: block;
 		aspect-ratio: var(--work-aspect);
 		overflow: hidden;
-		background: var(--color-sand);
+		background: var(--color-espresso-deep);
+border-radius: 0.6rem;
+box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.65);
 	}
 
 	.work-card__image {
@@ -316,10 +329,12 @@ import { works } from "../data/works";
 	.work-lightbox {
 		position: fixed;
 		inset: 0;
-		width: min(86vw, 72rem);
+		/* width: min(86vw, 72rem); */
+		width: min(94vw, 84rem);
 		height: fit-content;
 		max-width: none;
-		max-height: 86dvh;
+		/* max-height: 86dvh; */
+		max-height: 92dvh;
 		margin: auto;
 		overflow: auto;
 		padding: 0;
@@ -457,7 +472,7 @@ import { works } from "../data/works";
 
 	@media (max-width: 63.999rem) {
 		.works-section {
-			padding-block-start: .5rem;
+			padding-block-start:  3.5rem;
 		}
 
 		.works-header {
@@ -530,6 +545,32 @@ import { works } from "../data/works";
 			line-height: 1.75;
 		}
 	}
+	/* update */
+	@media (min-width: 64rem) {
+	.lightbox-panel {
+		grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 1fr);
+		grid-template-rows: minmax(0, 1fr);
+		max-height: calc(92dvh - 2rem);
+	}
+
+	.lightbox-media {
+		height: calc(92dvh - 4rem);
+		padding: 1rem;
+	}
+
+	.lightbox-media img {
+		max-width: 100%;
+		max-height: calc(92dvh - 6rem);
+	}
+
+	.lightbox-details {
+		align-self: center;
+		max-height: calc(92dvh - 4rem);
+		overflow: auto;
+		padding: 1rem 1.5rem;
+	}
+}
+/* End */
 
 	@media (prefers-reduced-motion: reduce) {
 		.work-card,
