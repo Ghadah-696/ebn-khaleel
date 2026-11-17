@@ -6,16 +6,17 @@ import { works } from "../data/works";
 <!-- <section class="works-section" id="portfolio" aria-labelledby="works-title" data-portfolio-gallery> -->
  <section class="works-band" id="portfolio" aria-labelledby="works-title" data-portfolio-gallery>
 <div class="works-section">
-	<header class="works-header">
+	<header class="works-header" data-reveal>
 		<p class="works-kicker">01 / {String(works.length).padStart(2, "0")}</p>
 		<h2 id="works-title">الأعمال</h2>
 		<p class="works-subtitle">مختارات من الأعمال الإعلانية</p>
 	</header>
 
-	<div class="works-grid" data-works-grid>
+	<div class="works-grid" data-works-grid data-reveal-stagger>
 		{works.map((work, index) => (
 			<article
 				class="work-card"
+				data-reveal="zoom"
 				style={`--work-aspect: ${work.image.width / work.image.height}; --work-delay: ${Math.min(index, 6) * 80}ms;`}
 			>
 				<button
@@ -29,7 +30,7 @@ import { works } from "../data/works";
 					aria-haspopup="dialog"
 					aria-label={work.title ? `عرض ${work.title}` : "عرض صورة العمل"}
 				>
-					<span class="work-card__media">
+					<span class="work-card__media" data-parallax={index % 2 === 0 ? "0.03" : "-0.02"}>
 						<Image
 							src={work.image}
 							alt={work.alt ?? ""}
@@ -221,6 +222,7 @@ border-block-end: 1px solid color-mix(in srgb, var(--color-gold-soft) 45%, trans
 		background: var(--color-espresso-deep);
 border-radius: 0.6rem;
 box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.65);
+transform: translate3d(0, var(--parallax-y, 0px), 0);
 	}
 
 	.work-card__image {

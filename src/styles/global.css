@@ -45,6 +45,45 @@
 		scroll-padding-block-start: 5rem;
 	}
 
+	html.js [data-reveal] {
+	opacity: 0;
+	transform: translate3d(0, 2rem, 0);
+	transition:
+		opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+		transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+	transition-delay: var(--reveal-delay, 0ms);
+	will-change: opacity, transform;
+}
+
+html.js [data-reveal="zoom"] {
+	transform: translate3d(0, 2rem, 0) scale(0.96);
+}
+
+html.js [data-reveal="from-right"] {
+	transform: translate3d(2.5rem, 0, 0);
+}
+
+html.js [data-reveal="from-left"] {
+	transform: translate3d(-2.5rem, 0, 0);
+}
+
+html.js [data-reveal].is-visible {
+	opacity: 1;
+	transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	html.js [data-reveal] {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}
+
 	body {
 		margin: 0;
 		background: var(--color-cream);

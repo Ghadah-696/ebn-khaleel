@@ -8,13 +8,14 @@ const currentYear = new Date().getFullYear();
 	<section class="footer-cta" aria-labelledby="footer-cta-title"> -->
 	<footer class="site-footer">
 	<div class="footer-cta-band">
-	<section class="footer-cta" aria-labelledby="footer-cta-title">
+	<section class="footer-cta" aria-labelledby="footer-cta-title" data-reveal-stagger>
 		<div class="footer-cta__rule" aria-hidden="true"></div>
-		<p class="footer-cta__kicker">{profile.closingLine}</p>
-		<h2 id="footer-cta-title">{profile.closingHeadline}</h2>
-		<p class="footer-cta__support">{profile.footerSupport}</p>
+		<p class="footer-cta__kicker" data-reveal>{profile.closingLine}</p>
+		<h2 id="footer-cta-title" data-reveal>{profile.closingHeadline}</h2>
+		<p class="footer-cta__support" data-reveal>{profile.footerSupport}</p>
 		<a
 			class="footer-cta__button"
+			data-reveal
 			href={whatsappUrl}
 			target="_blank"
 			rel="noopener noreferrer"
@@ -29,8 +30,8 @@ const currentYear = new Date().getFullYear();
 	</div>
 
 	<div class="footer-main" id="footer-contact">
-		<div class="footer-grid">
-			<section class="footer-brand" aria-labelledby="footer-brand-title">
+		<div class="footer-grid" data-reveal-stagger>
+			<section class="footer-brand" aria-labelledby="footer-brand-title" data-reveal>
 				<p class="footer-label">ابن خليل</p>
 				<h2 id="footer-brand-title">{profile.name}</h2>
 				<p class="footer-role">{profile.role}</p>
@@ -42,7 +43,7 @@ const currentYear = new Date().getFullYear();
 </svg>
 			</section>
 
-			<nav class="footer-nav" aria-label="روابط التذييل">
+			<nav class="footer-nav" aria-label="روابط التذييل" data-reveal>
 				<p class="footer-label">استكشف</p>
 				<a href="#home">الرئيسية</a>
 				<a href="#portfolio">الأعمال</a>
@@ -57,13 +58,14 @@ const currentYear = new Date().getFullYear();
 					<span aria-hidden="true">↗</span>
 				</a>
 				<p>{profile.ctaLine}</p>
+				
 			</section>
 		</div>
 
-		<!-- <div class="footer-bottom">
+		<div class="footer-bottom">
 			<p>© {currentYear} {profile.footerCopyright}</p>
-			<a href="#home">العودة إلى الأعلى <span aria-hidden="true">↑</span></a>
-		</div> -->
+	
+		</div>
 	</div>
 </footer>
 
@@ -247,6 +249,7 @@ const currentYear = new Date().getFullYear();
 	}
 
 	.footer-bottom {
+		
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -255,6 +258,9 @@ const currentYear = new Date().getFullYear();
 		border-block-start: 1px solid color-mix(in srgb, var(--color-cream) 16%, transparent);
 		color: var(--color-sand);
 		font-size: 0.78rem;
+		justify-content: center;
+			text-align: center;
+		
 	}
 
 	.footer-bottom p {
@@ -282,8 +288,9 @@ const currentYear = new Date().getFullYear();
 		}
 
 		.footer-bottom {
-			align-items: flex-start;
+			align-items: flex-center;
 			flex-direction: column;
+			
 		}
 	}
 

@@ -19,6 +19,7 @@ import { profile, whatsappUrl } from "../data/profile";
 			height={820}
 			loading="eager"
 			class="hero-image"
+			data-parallax="0.05"
 		/>
 	</div>
 
@@ -30,7 +31,7 @@ import { profile, whatsappUrl } from "../data/profile";
 	<span class="hero-title__line">
 		أنا كلامي{" "}
 		<strong>
-			بيّاع
+			 يبيع
 			<svg class="hero-underline" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
 				<path d="M2 8 C 25 2, 50 12, 98 4" pathLength="1" />
 			</svg>
@@ -142,6 +143,7 @@ import { profile, whatsappUrl } from "../data/profile";
 		aspect-ratio: 0.88;
 		border-radius: 0.8rem;
 		object-fit: cover;
+		transform: translate3d(0, var(--parallax-y, 0px), 0);
 	}
 
 	.visual-frame {
@@ -151,6 +153,7 @@ import { profile, whatsappUrl } from "../data/profile";
 	}
 
 	.visual-frame--outer {
+		animation: frame-float-a 9s ease-in-out infinite alternate;
 		inset-block: 0;
 		inset-inline-start: 1.2rem;
 		inset-inline-end: 0;
@@ -159,6 +162,7 @@ import { profile, whatsappUrl } from "../data/profile";
 	}
 
 	.visual-frame--inner {
+		animation: frame-float-b 11s ease-in-out infinite alternate;
 		inset-block: 0.65rem;
 		inset-inline-start: 1.45rem;
 		inset-inline-end: 0;
@@ -283,7 +287,7 @@ import { profile, whatsappUrl } from "../data/profile";
 	} */
 	 .hero-title strong {
 	position: relative;
-	display: inline-block;
+	/* display: inline-block; */
 	margin-inline-start: 0.08em;
 	color: var(--color-sage);
 }
@@ -507,11 +511,22 @@ import { profile, whatsappUrl } from "../data/profile";
 		from { opacity: 0; transform: translateX(-1.25rem); }
 		to { opacity: 1; transform: translateX(0); }
 	}
+	/* Update */
+	@keyframes frame-float-a {
+	from { transform: rotate(-3deg) translateY(0); }
+	to { transform: rotate(-2deg) translateY(-6px); }
+}
+
+@keyframes frame-float-b {
+	from { transform: rotate(2deg) translateY(0); }
+	to { transform: rotate(1deg) translateY(5px); }
+}
 
 	@media (prefers-reduced-motion: reduce) {
 		.hero__visual,
 		.hero__copy > * {
 			animation: none;
+			
 		}
 
 		.hero-cta {

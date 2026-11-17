@@ -22,8 +22,12 @@ const {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<title>{title}</title>
+		<script is:inline>document.documentElement.classList.add("js");</script>
 	</head>
 	<body>
 		<slot />
+		<script>
+	import "../scripts/motion";
+</script>
 	</body>
 </html>
