@@ -26,18 +26,17 @@ import { profile, whatsappUrl } from "../data/profile";
 		<p class="hero-name">{profile.name}</p>
 		<p class="hero-eyebrow">{profile.role}</p>
 		<h1 id="hero-title" class="hero-title">
-			<span>أنا مو <em>بيّاع كلام..</em></span>
-			<!-- <span>أنا كلامي <strong>بيّاع </strong></span> -->
-			 <span>
-	أنا كلامي
-	<strong>
-		بيّاع
-		<svg class="hero-underline" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
-			<path d="M2 8 C 25 2, 50 12, 98 4" pathLength="1" />
-		</svg>
-	</strong>
-</span>
-		</h1>
+	<span class="hero-title__line">أنا مو <em>بيّاع كلام..</em></span>
+	<span class="hero-title__line">
+		أنا كلامي{" "}
+		<strong>
+			بيّاع
+			<svg class="hero-underline" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
+				<path d="M2 8 C 25 2, 50 12, 98 4" pathLength="1" />
+			</svg>
+		</strong>
+	</span>
+</h1>
 		<p class="hero-intro" data-intro>
 			<span>{profile.introParagraphs.slice(0, 2).join(" ")}</span>{" "}
 			<span id="hero-intro-more" class="hero-intro__remaining" hidden>
@@ -219,43 +218,75 @@ import { profile, whatsappUrl } from "../data/profile";
 		font-weight: 600;
 	}
 
-	.hero-title {
+	/* .hero-title {
 		max-width: 12ch;
 		margin: 0;
 		color: var(--color-espresso);
 		font-family: var(--font-heading);
 		font-size: clamp(3.25rem, 7vw, 6.5rem);
 		font-weight: 700;
-		/* letter-spacing: -0.08em; */
+		
 		letter-spacing: 0;
 		line-height: 1.03;
-	}
+	} */
+	.hero-title {
+	max-width: none;
+	margin: 0;
+	color: var(--color-espresso);
+	font-family: var(--font-heading);
+	font-size: clamp(2.4rem, 4vw, 4.25rem);
+	font-weight: 700;
+	letter-spacing: 0;
+	line-height: 1.4;
+	text-wrap: balance;
+}
 
-	.hero-title > span {
+	/* .hero-title > span {
 		display: block;
-	}
+	} */
+	 .hero-title__line {
+	display: block;
+}
 
-	.hero-title em,
+	/* .hero-title em,
 	.hero-title strong {
 		display: inline;
-	}
+	} */
+	 .hero-title em,
+.hero-title strong {
+	font-family: var(--font-quote);
+	font-size: 1.08em;
+	font-style: normal;
+	font-weight: 400;
+	letter-spacing: 0;
+}
 
-	.hero-title em {
+	/* .hero-title em {
 		color: var(--color-coffee);
 		font-family: var(--font-quote);
 		font-size: 0.9em;
 		font-style: normal;
 		font-weight: 400;
 		letter-spacing: 0;
-	}
+	} */
+	 .hero-title em {
+	color: var(--color-coffee);
+}
 
-	.hero-title strong {
+
+	/* .hero-title strong {
 		color: var(--color-sage);
 		font-family: var(--font-quote);
 		font-size: 1.18em;
 		font-weight: 400;
 		letter-spacing: 0;
-	}
+	} */
+	 .hero-title strong {
+	position: relative;
+	display: inline-block;
+	margin-inline-start: 0.08em;
+	color: var(--color-sage);
+}
 	/* updated */
 	.hero-title strong {
 	position: relative;
@@ -382,6 +413,9 @@ import { profile, whatsappUrl } from "../data/profile";
 		.hero__copy > :nth-child(4) { animation-delay: 280ms; }
 		.hero__copy > :nth-child(5) { animation-delay: 360ms; }
 		.hero__copy > :nth-child(6) { animation-delay: 430ms; }
+		.hero-title__line {
+		white-space: nowrap;
+	}
 	}
 
 	@media (max-width: 63.999rem) {
@@ -425,11 +459,16 @@ import { profile, whatsappUrl } from "../data/profile";
 			font-size: 1.35rem;
 		}
 
-		.hero-title {
+		/* .hero-title {
 			max-width: none;
 			font-size: clamp(2.65rem, 12vw, 4.5rem);
 			line-height: 1.07;
-		}
+		} */
+		 .hero-title {
+	max-width: none;
+	font-size: clamp(2rem, 8.5vw, 3.25rem);
+	line-height: 1.4;
+}
 
 		.hero-intro {
 			max-width: 36rem;

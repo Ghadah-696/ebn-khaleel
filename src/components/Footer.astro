@@ -4,7 +4,10 @@ import { profile, whatsappUrl } from "../data/profile";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
+<!-- <footer class="site-footer">
+	<section class="footer-cta" aria-labelledby="footer-cta-title"> -->
+	<footer class="site-footer">
+	<div class="footer-cta-band">
 	<section class="footer-cta" aria-labelledby="footer-cta-title">
 		<div class="footer-cta__rule" aria-hidden="true"></div>
 		<p class="footer-cta__kicker">{profile.closingLine}</p>
@@ -20,9 +23,10 @@ const currentYear = new Date().getFullYear();
 			<svg viewBox="0 0 24 24" aria-hidden="true">
 				<path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.1 1.6 5.9L.2 24l6.5-1.7c1.7.9 3.5 1.3 5.4 1.3h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.3-6.1-3.5-8.3Zm-8.3 18.1h-.1c-1.7 0-3.4-.5-4.8-1.3l-.3-.2-3.9 1 1-3.8-.2-.3a9.7 9.7 0 0 1-1.5-5.2C2.4 6.4 6.7 2 12.1 2c2.6 0 5 1 6.9 2.9a9.7 9.7 0 0 1 2.8 6.9c0 5.4-4.3 9.8-9.6 9.8Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2c-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.6-.8-2.7-1.4-3.8-3.2-.3-.5.3-.5.9-1.7.1-.2.1-.4 0-.6l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.3c.2.2 2.3 3.5 5.5 4.8 2 .8 2.8.9 3.8.8.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4 0-.2-.3-.3-.6-.5Z" />
 			</svg>
-			<!-- <span>تواصل معي عبر واتساب</span> -->
+			<span>تواصل معي عبر واتساب</span>
 		</a>
 	</section>
+	</div>
 
 	<div class="footer-main" id="footer-contact">
 		<div class="footer-grid">
@@ -31,12 +35,18 @@ const currentYear = new Date().getFullYear();
 				<h2 id="footer-brand-title">{profile.name}</h2>
 				<p class="footer-role">{profile.role}</p>
 				<p class="footer-description">{profile.introParagraphs[2]}</p>
+				<svg class="footer-stamp" viewBox="0 0 120 120" aria-hidden="true">
+	<circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="1.5" />
+	<circle cx="60" cy="60" r="48" fill="none" stroke="currentColor" stroke-width="0.75" stroke-dasharray="2 4" />
+	<text x="60" y="68" text-anchor="middle" fill="currentColor" font-size="22">ابن خليل</text>
+</svg>
 			</section>
 
 			<nav class="footer-nav" aria-label="روابط التذييل">
 				<p class="footer-label">استكشف</p>
 				<a href="#home">الرئيسية</a>
 				<a href="#portfolio">الأعمال</a>
+				<a href="#process">كيف أكتب</a>
 				<a href="#contact">تواصل معي</a>
 			</nav>
 
@@ -50,19 +60,27 @@ const currentYear = new Date().getFullYear();
 			</section>
 		</div>
 
-		<div class="footer-bottom">
+		<!-- <div class="footer-bottom">
 			<p>© {currentYear} {profile.footerCopyright}</p>
 			<a href="#home">العودة إلى الأعلى <span aria-hidden="true">↑</span></a>
-		</div>
+		</div> -->
 	</div>
 </footer>
 
 <style>
 	.site-footer {
-		margin-block-start: clamp(2rem, 6vw, 6rem);
+		/* margin-block-start: clamp(2rem, 6vw, 6rem);
 		background: var(--color-espresso);
-		color: var(--color-cream);
-	}
+		color: var(--color-cream); */
+	margin-block-start: 0;
+	background: var(--color-espresso-deep);
+	color: var(--color-cream);
+}
+
+.footer-cta-band {
+	background: var(--color-caramel);
+}
+	
 
 	.footer-cta {
 		position: relative;
@@ -73,7 +91,9 @@ const currentYear = new Date().getFullYear();
 		padding: clamp(4rem, 9vw, 8rem) clamp(1.25rem, 6vw, 6rem);
 		text-align: center;
 	}
-
+.footer-cta-band .footer-cta__kicker {
+	color: var(--color-sand);
+}
 	.footer-cta__rule {
 		width: min(8rem, 25vw);
 		height: 1px;
@@ -95,7 +115,7 @@ const currentYear = new Date().getFullYear();
 		margin: 1rem 0 0;
 		font-size: clamp(2rem, 5vw, 4.5rem);
 		line-height: 1.2;
-		letter-spacing: -0.06em;
+		letter-spacing: 0;
 	}
 
 	.footer-cta__support {
@@ -174,6 +194,20 @@ const currentYear = new Date().getFullYear();
 		font-size: 0.9rem;
 		line-height: 1.9;
 	}
+	/* Update */
+	.footer-stamp {
+	width: 6rem;
+	height: 6rem;
+	margin-block-start: 1.75rem;
+	color: var(--color-gold-soft);
+	opacity: 0.9;
+	transform: rotate(-8deg);
+}
+
+.footer-stamp text {
+	font-family: var(--font-quote);
+}
+/* End */
 
 	.footer-nav,
 	.footer-contact {
