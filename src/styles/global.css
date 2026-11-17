@@ -1,1 +1,68 @@
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/700.css";
+@import "@fontsource/alexandria/600.css";
+@import "@fontsource/alexandria/700.css";
+@import "@fontsource/amiri/400.css";
 @import "tailwindcss";
+
+@theme {
+	--color-espresso: #4A2C20;
+	--color-coffee: #8B5E3C;
+	--color-cream: #FAF5EC;
+	--color-sand: #EFE4D2;
+	--color-gold: #C08A3E;
+	--color-sage: #4F5D4A;
+	--color-ink: #2A1B14;
+
+	--font-body: "IBM Plex Sans Arabic", sans-serif;
+	--font-heading: "Alexandria", sans-serif;
+	--font-quote: "Amiri", serif;
+}
+
+@layer base {
+	:root {
+		color-scheme: light;
+	}
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		scroll-padding-block-start: 5rem;
+	}
+
+	body {
+		margin: 0;
+		background: var(--color-cream);
+		color: var(--color-ink);
+		font-family: var(--font-body);
+		font-weight: 400;
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: var(--font-heading);
+	}
+
+	:focus-visible {
+		outline: 3px solid var(--color-coffee);
+		outline-offset: 3px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}

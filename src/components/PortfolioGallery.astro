@@ -1,0 +1,550 @@
+---
+import { Image } from "astro:assets";
+import { works } from "../data/works";
+---
+
+<section class="works-section" id="portfolio" aria-labelledby="works-title" data-portfolio-gallery>
+	<header class="works-header">
+		<p class="works-kicker">01 / {String(works.length).padStart(2, "0")}</p>
+		<h2 id="works-title">الأعمال</h2>
+		<p class="works-subtitle">مختارات من الأعمال الإعلانية</p>
+	</header>
+
+	<div class="works-grid" data-works-grid>
+		{works.map((work, index) => (
+			<article
+				class="work-card"
+				style={`--work-aspect: ${work.image.width / work.image.height}; --work-delay: ${Math.min(index, 6) * 80}ms;`}
+			>
+				<button
+					type="button"
+					class="work-card__trigger"
+					data-work-trigger
+					data-work-id={work.id}
+					data-full-src={work.image.src}
+					data-alt={work.alt ?? ""}
+					aria-controls="work-lightbox"
+					aria-haspopup="dialog"
+					aria-label={work.title ? `عرض ${work.title}` : "عرض صورة العمل"}
+				>
+					<span class="work-card__media">
+						<Image
+							src={work.image}
+							alt={work.alt ?? ""}
+							width={work.image.width}
+							height={work.image.height}
+							widths={[480, 720, 960]}
+							sizes="(min-width: 1024px) 50vw, 100vw"
+							format="webp"
+							loading={index === 0 ? "eager" : "lazy"}
+							class="work-card__image"
+						/>
+						<span class="work-card__overlay">
+							<span class="work-card__details">
+								{work.title && <strong>{work.title}</strong>}
+								{work.writingModel && <span>{work.writingModel}</span>}
+								{work.description && <span>{work.description}</span>}
+								{!work.title && <span class="work-card__available">عرض العمل</span>}
+							</span>
+							<span class="work-card__arrow" aria-hidden="true">↗</span>
+						</span>
+						<span class="work-card__index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+					</span>
+				</button>
+			</article>
+		))}
+	</div>
+</section>
+
+<dialog class="work-lightbox" id="work-lightbox" aria-label="عرض صورة العمل">
+	<div class="lightbox-panel">
+		<button class="lightbox-close" type="button" data-lightbox-close aria-label="إغلاق الصورة">×</button>
+		<div class="lightbox-media">
+			<img data-lightbox-image alt="" />
+		</div>
+		<div class="lightbox-details">
+			{works.map((work) => (
+				<article data-lightbox-details={work.id} hidden>
+					{work.title && <h2 id="lightbox-title">{work.title}</h2>}
+					{work.writingModel && <p class="lightbox-model">{work.writingModel}</p>}
+					{work.description && <p>{work.description}</p>}
+					{work.modelSteps && (
+						<ul>
+							{work.modelSteps.map((step) => <li>{step}</li>)}
+						</ul>
+					)}
+				</article>
+			))}
+		</div>
+	</div>
+</dialog>
+
+<script>
+	const gallery = document.querySelector("[data-portfolio-gallery]");
+	const lightbox = document.querySelector("#work-lightbox");
+
+	if (gallery instanceof HTMLElement && lightbox instanceof HTMLDialogElement) {
+		const image = lightbox.querySelector("[data-lightbox-image]");
+		const closeButtons = lightbox.querySelectorAll("[data-lightbox-close]");
+		const detailPanels = lightbox.querySelectorAll<HTMLElement>("[data-lightbox-details]");
+
+		if (image instanceof HTMLImageElement) {
+			const closeLightbox = () => {
+				if (!lightbox.open) return;
+				lightbox.classList.add("is-closing");
+				document.body.dataset.lightboxOpen = "true";
+				window.setTimeout(() => {
+					lightbox.close();
+					lightbox.classList.remove("is-closing");
+					lightbox.classList.remove("is-visible");
+					delete document.body.dataset.lightboxOpen;
+				}, 180);
+			};
+
+			gallery.querySelectorAll("[data-work-trigger]").forEach((trigger) => {
+				if (!(trigger instanceof HTMLButtonElement)) return;
+				trigger.addEventListener("click", () => {
+					const workId = trigger.dataset.workId;
+					const fullSrc = trigger.dataset.fullSrc;
+
+					if (!workId || !fullSrc) return;
+					image.src = fullSrc;
+					image.alt = trigger.dataset.alt ?? "";
+
+					detailPanels.forEach((panel) => {
+						panel.hidden = panel.getAttribute("data-lightbox-details") !== workId;
+					});
+
+					lightbox.showModal();
+					document.body.dataset.lightboxOpen = "true";
+					window.requestAnimationFrame(() => lightbox.classList.add("is-visible"));
+				});
+			});
+
+			closeButtons.forEach((button) => button.addEventListener("click", closeLightbox));
+			lightbox.addEventListener("click", (event) => {
+				if (event.target === lightbox) closeLightbox();
+			});
+			lightbox.addEventListener("cancel", (event) => {
+				event.preventDefault();
+				closeLightbox();
+			});
+		}
+	}
+</script>
+
+<style>
+	.works-section {
+		max-width: 60rem;
+		margin-inline: auto;
+		padding: clamp(3rem, 7vw, 6rem) clamp(1.25rem, 4vw, 4rem) 8rem;
+	}
+
+	.works-header {
+		display: grid;
+		justify-items: center;
+		gap: 0.7rem;
+		max-width: 38rem;
+		margin-block-end: clamp(2rem, 4vw, 3.5rem);
+		margin-inline: auto;
+		padding-block-end: 1rem;
+		border-block-end: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+		text-align: center;
+	}
+
+	.works-kicker {
+		margin: auto;
+		color: var(--color-coffee);
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.works-header h2 {
+		margin: 0;
+		color: var(--color-espresso);
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 5vw, 4rem);
+		font-weight: 700;
+		letter-spacing: -0.07em;
+		line-height: 1;
+	}
+
+	.works-subtitle {
+		max-width: 28rem;
+		margin: 0.25rem 0 0;
+		color: var(--color-coffee);
+		font-size: 0.95rem;
+		line-height: 1.8;
+	}
+
+	.works-grid {
+		columns: 2;
+		column-gap: clamp(1.2rem, 2.5vw, 2.5rem);
+	}
+
+	.work-card {
+		display: inline-block;
+		width: 100%;
+		min-width: 0;
+		margin-block-end: clamp(1.2rem, 2.5vw, 2.5rem);
+		break-inside: avoid;
+	}
+
+	.work-card__trigger {
+		display: block;
+		width: 100%;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: inherit;
+		cursor: pointer;
+		text-align: start;
+	}
+
+	.work-card__media {
+		position: relative;
+		display: block;
+		aspect-ratio: var(--work-aspect);
+		overflow: hidden;
+		background: var(--color-sand);
+	}
+
+	.work-card__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), filter 400ms ease;
+	}
+
+	.work-card__overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: clamp(1.25rem, 3vw, 2rem);
+		background: color-mix(in srgb, var(--color-espresso) 87%, transparent);
+		color: var(--color-cream);
+		opacity: 0;
+		transition: opacity 300ms ease;
+	}
+
+	.work-card__details {
+		display: grid;
+		gap: 0.45rem;
+		max-width: 30rem;
+		transform: translateY(0.75rem);
+		transition: transform 350ms ease;
+	}
+
+	.work-card__details strong {
+		font-family: var(--font-heading);
+		font-size: clamp(1rem, 2vw, 1.45rem);
+		line-height: 1.35;
+	}
+
+	.work-card__details span {
+		font-size: 0.88rem;
+		line-height: 1.7;
+	}
+
+	.work-card__details span:first-of-type {
+		color: var(--color-gold);
+		font-weight: 700;
+	}
+
+	.work-card__available {
+		color: var(--color-cream) !important;
+		font-weight: 700;
+	}
+
+	.work-card__arrow {
+		display: grid;
+		width: 2.5rem;
+		height: 2.5rem;
+		flex: none;
+		place-items: center;
+		border: 1px solid var(--color-gold);
+		border-radius: 999px;
+		color: var(--color-cream);
+		font-size: 1.1rem;
+		transform: translateY(0.75rem);
+		transition: transform 350ms ease, background-color 250ms ease;
+	}
+
+	.work-card__index {
+		position: absolute;
+		inset-block-start: 0.85rem;
+		inset-inline-start: 0.9rem;
+		color: var(--color-cream);
+		font-family: var(--font-heading);
+		font-size: 0.7rem;
+		letter-spacing: 0.12em;
+		opacity: 0.9;
+	}
+
+	.work-card__trigger:hover .work-card__image,
+	.work-card__trigger:focus-visible .work-card__image {
+		transform: scale(1.04);
+		filter: saturate(0.9);
+	}
+
+	.work-card__trigger:hover .work-card__overlay,
+	.work-card__trigger:focus-visible .work-card__overlay {
+		opacity: 1;
+	}
+
+	.work-card__trigger:hover .work-card__details,
+	.work-card__trigger:focus-visible .work-card__details,
+	.work-card__trigger:hover .work-card__arrow,
+	.work-card__trigger:focus-visible .work-card__arrow {
+		transform: translateY(0);
+	}
+
+	.work-card__trigger:hover .work-card__arrow,
+	.work-card__trigger:focus-visible .work-card__arrow {
+		background: var(--color-coffee);
+	}
+
+	.work-card {
+		animation: gallery-enter 650ms var(--work-delay, 0ms) both cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.work-lightbox {
+		position: fixed;
+		inset: 0;
+		width: min(86vw, 72rem);
+		height: fit-content;
+		max-width: none;
+		max-height: 86dvh;
+		margin: auto;
+		overflow: auto;
+		padding: 0;
+		border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+		background: var(--color-espresso);
+		color: var(--color-cream);
+		opacity: 0;
+		transform: translateY(0.75rem) scale(0.98);
+		transition: opacity 180ms ease, transform 180ms ease;
+	}
+
+	.work-lightbox::backdrop {
+		background: color-mix(in srgb, var(--color-ink) 86%, transparent);
+		opacity: 0;
+		transition: opacity 180ms ease;
+	}
+
+	.work-lightbox.is-visible,
+	.work-lightbox.is-visible::backdrop {
+		opacity: 1;
+	}
+
+	.work-lightbox.is-visible {
+		transform: translateY(0) scale(1);
+	}
+
+	.work-lightbox.is-closing,
+	.work-lightbox.is-closing::backdrop {
+		opacity: 0;
+	}
+
+	.work-lightbox.is-closing {
+		transform: translateY(0.75rem) scale(0.98);
+	}
+
+	.lightbox-panel {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto auto;
+		width: 100%;
+		min-height: 0;
+		max-height: calc(86dvh - 2rem);
+		padding: 1rem;
+		gap: 1rem;
+	}
+
+	.lightbox-close {
+		position: absolute;
+		inset-block-start: 1rem;
+		inset-inline-start: 1rem;
+		z-index: 2;
+		display: grid;
+		width: 2.5rem;
+		height: 2.5rem;
+		place-items: center;
+		border: 1px solid var(--color-gold);
+		border-radius: 999px;
+		background: var(--color-espresso);
+		color: var(--color-cream);
+		cursor: pointer;
+		font-size: 1.5rem;
+		line-height: 1;
+	}
+
+	.lightbox-media {
+		display: grid;
+		min-width: 0;
+		min-height: 0;
+		height: min(72vh, 50rem);
+		place-items: center;
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		background: var(--color-ink);
+	}
+
+	.lightbox-media img {
+		display: block;
+		width: auto;
+		height: auto;
+		max-width: min(78vw, 52rem);
+		max-height: calc(72vh - 4rem);
+		object-fit: contain;
+	}
+
+	.lightbox-details {
+		min-width: 0;
+		max-width: 48rem;
+		margin-inline: auto;
+		padding: 1rem clamp(1.5rem, 4vw, 4rem) 1.5rem;
+	}
+
+	.lightbox-details article[hidden] {
+		display: none;
+	}
+
+	.lightbox-details h2 {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(1.35rem, 3vw, 2.5rem);
+		line-height: 1.35;
+	}
+
+	.lightbox-details p {
+		margin: 1.25rem 0 0;
+		font-size: 1rem;
+		line-height: 2;
+	}
+
+	.lightbox-details .lightbox-model {
+		color: var(--color-gold);
+		font-weight: 700;
+	}
+
+	.lightbox-details ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 1.5rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.lightbox-details li {
+		padding: 0.4rem 0.7rem;
+		border: 1px solid var(--color-gold);
+		border-radius: 999px;
+		color: var(--color-cream);
+		font-size: 0.85rem;
+	}
+
+	@keyframes gallery-enter {
+		from { opacity: 0; transform: translateY(1.5rem); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	@media (max-width: 63.999rem) {
+		.works-section {
+			padding-block-start: .5rem;
+		}
+
+		.works-header {
+			margin-block-end: 2rem;
+		}
+
+		.works-grid {
+			columns: 1;
+			column-gap: 0;
+		}
+
+		.work-card {
+			margin-block-end: 1.5rem;
+		}
+
+		.work-card__overlay {
+			align-items: flex-end;
+			padding: 1rem;
+			background: linear-gradient(to top, color-mix(in srgb, var(--color-espresso) 78%, transparent), transparent 52%);
+			opacity: 1;
+		}
+
+		.work-card__details {
+			transform: none;
+		}
+
+		.work-card__details strong,
+		.work-card__details span:not(.work-card__available) {
+			display: none;
+		}
+
+		.work-card__arrow {
+			transform: none;
+		}
+
+		.work-lightbox {
+			width: 94vw;
+			max-height: 90dvh;
+		}
+
+		.lightbox-panel {
+			grid-template-columns: 1fr;
+			grid-template-rows: minmax(0, 1fr) auto;
+			max-height: none;
+		}
+
+		.lightbox-media {
+			min-height: 0;
+			height: auto;
+			padding: 3.5rem 1rem 1rem;
+		}
+
+		.lightbox-media img {
+			max-width: 80vw;
+			max-height: 60vh;
+		}
+
+		.lightbox-details {
+			max-height: 12rem;
+			padding: 1.25rem 1.25rem 1.5rem;
+		}
+
+		.lightbox-details h2 {
+			font-size: 1.25rem;
+		}
+
+		.lightbox-details p {
+			margin-block-start: 0.55rem;
+			font-size: 0.9rem;
+			line-height: 1.75;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.work-card,
+		.work-card__image,
+		.work-card__overlay,
+		.work-card__details,
+		.work-card__arrow,
+		.work-lightbox,
+		.work-lightbox::backdrop {
+			animation: none;
+			transition: none;
+		}
+	}
+
+	:global(body[data-lightbox-open="true"]) {
+		overflow: hidden;
+	}
+</style>

@@ -1,0 +1,263 @@
+---
+import { profile, whatsappUrl } from "../data/profile";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<section class="footer-cta" aria-labelledby="footer-cta-title">
+		<div class="footer-cta__rule" aria-hidden="true"></div>
+		<p class="footer-cta__kicker">{profile.closingLine}</p>
+		<h2 id="footer-cta-title">{profile.closingHeadline}</h2>
+		<p class="footer-cta__support">{profile.footerSupport}</p>
+		<a
+			class="footer-cta__button"
+			href={whatsappUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			aria-label="تواصل معي عبر واتساب"
+		>
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.6 4.1 1.6 5.9L.2 24l6.5-1.7c1.7.9 3.5 1.3 5.4 1.3h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.3-6.1-3.5-8.3Zm-8.3 18.1h-.1c-1.7 0-3.4-.5-4.8-1.3l-.3-.2-3.9 1 1-3.8-.2-.3a9.7 9.7 0 0 1-1.5-5.2C2.4 6.4 6.7 2 12.1 2c2.6 0 5 1 6.9 2.9a9.7 9.7 0 0 1 2.8 6.9c0 5.4-4.3 9.8-9.6 9.8Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2c-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.6-.8-2.7-1.4-3.8-3.2-.3-.5.3-.5.9-1.7.1-.2.1-.4 0-.6l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.3c.2.2 2.3 3.5 5.5 4.8 2 .8 2.8.9 3.8.8.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4 0-.2-.3-.3-.6-.5Z" />
+			</svg>
+			<!-- <span>تواصل معي عبر واتساب</span> -->
+		</a>
+	</section>
+
+	<div class="footer-main" id="footer-contact">
+		<div class="footer-grid">
+			<section class="footer-brand" aria-labelledby="footer-brand-title">
+				<p class="footer-label">ابن خليل</p>
+				<h2 id="footer-brand-title">{profile.name}</h2>
+				<p class="footer-role">{profile.role}</p>
+				<p class="footer-description">{profile.introParagraphs[2]}</p>
+			</section>
+
+			<nav class="footer-nav" aria-label="روابط التذييل">
+				<p class="footer-label">استكشف</p>
+				<a href="#home">الرئيسية</a>
+				<a href="#portfolio">الأعمال</a>
+				<a href="#contact">تواصل معي</a>
+			</nav>
+
+			<section class="footer-contact" aria-labelledby="footer-contact-title">
+				<p class="footer-label" id="footer-contact-title">لنتحدث</p>
+				<a class="footer-contact__link" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+					<span>تواصل معي عبر واتساب</span>
+					<span aria-hidden="true">↗</span>
+				</a>
+				<p>{profile.ctaLine}</p>
+			</section>
+		</div>
+
+		<div class="footer-bottom">
+			<p>© {currentYear} {profile.footerCopyright}</p>
+			<a href="#home">العودة إلى الأعلى <span aria-hidden="true">↑</span></a>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		margin-block-start: clamp(2rem, 6vw, 6rem);
+		background: var(--color-espresso);
+		color: var(--color-cream);
+	}
+
+	.footer-cta {
+		position: relative;
+		display: grid;
+		justify-items: center;
+		max-width: 88rem;
+		margin-inline: auto;
+		padding: clamp(4rem, 9vw, 8rem) clamp(1.25rem, 6vw, 6rem);
+		text-align: center;
+	}
+
+	.footer-cta__rule {
+		width: min(8rem, 25vw);
+		height: 1px;
+		margin-block-end: 1.5rem;
+		background: var(--color-gold);
+	}
+
+	.footer-cta__kicker,
+	.footer-label {
+		margin: 0;
+		color: var(--color-gold);
+		font-size: 0.76rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.footer-cta h2 {
+		max-width: 48rem;
+		margin: 1rem 0 0;
+		font-size: clamp(2rem, 5vw, 4.5rem);
+		line-height: 1.2;
+		letter-spacing: -0.06em;
+	}
+
+	.footer-cta__support {
+		margin: 1.35rem 0 0;
+		color: var(--color-sand);
+		font-size: 1rem;
+		line-height: 1.8;
+	}
+
+	.footer-cta__button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.65rem;
+		min-height: 3.35rem;
+		margin-block-start: 1.75rem;
+		padding: 0.85rem 1.35rem;
+		border: 1px solid var(--color-gold);
+		border-radius: 0.55rem;
+		background: var(--color-cream);
+		color: var(--color-espresso);
+		font-weight: 700;
+		text-decoration: none;
+		transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+	}
+
+	.footer-cta__button svg {
+		width: 1.25rem;
+		height: 1.25rem;
+		flex: none;
+	}
+
+	.footer-cta__button:hover {
+		background: var(--color-sand);
+		transform: translateY(-2px);
+	}
+
+	.footer-main {
+		border-block-start: 1px solid color-mix(in srgb, var(--color-cream) 22%, transparent);
+	}
+
+	.footer-grid,
+	.footer-bottom {
+		max-width: 88rem;
+		margin-inline: auto;
+		padding-inline: clamp(1.25rem, 6vw, 6rem);
+	}
+
+	.footer-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(8rem, 0.7fr) minmax(12rem, 1fr);
+		gap: clamp(2rem, 6vw, 7rem);
+		padding-block: clamp(3rem, 6vw, 5rem);
+	}
+
+	.footer-brand h2 {
+		margin: 0.7rem 0 0;
+		font-size: clamp(1.5rem, 3vw, 2.3rem);
+		line-height: 1.2;
+	}
+
+	.footer-role,
+	.footer-description,
+	.footer-contact p {
+		color: var(--color-sand);
+	}
+
+	.footer-role {
+		margin: 0.45rem 0 0;
+		font-size: 0.9rem;
+	}
+
+	.footer-description {
+		max-width: 32rem;
+		margin: 1.25rem 0 0;
+		font-size: 0.9rem;
+		line-height: 1.9;
+	}
+
+	.footer-nav,
+	.footer-contact {
+		display: grid;
+		align-content: start;
+		justify-items: start;
+		gap: 0.8rem;
+	}
+
+	.footer-nav a,
+	.footer-contact__link {
+		color: var(--color-cream);
+		text-decoration: none;
+		transition: color 180ms ease;
+	}
+
+	.footer-nav a:hover,
+	.footer-contact__link:hover {
+		color: var(--color-gold);
+	}
+
+	.footer-contact__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.65rem;
+		font-weight: 700;
+	}
+
+	.footer-contact__link span:last-child {
+		color: var(--color-gold);
+	}
+
+	.footer-contact p {
+		margin: 0.25rem 0 0;
+		font-size: 0.85rem;
+		line-height: 1.8;
+	}
+
+	.footer-bottom {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 1.25rem;
+		border-block-start: 1px solid color-mix(in srgb, var(--color-cream) 16%, transparent);
+		color: var(--color-sand);
+		font-size: 0.78rem;
+	}
+
+	.footer-bottom p {
+		margin: 0;
+	}
+
+	.footer-bottom a {
+		color: var(--color-cream);
+		text-decoration: none;
+	}
+
+	.footer-bottom a:hover {
+		color: var(--color-gold);
+	}
+
+	@media (max-width: 48rem) {
+		.footer-grid {
+			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		}
+
+		.footer-nav,
+		.footer-contact {
+			justify-items: start;
+		}
+
+		.footer-bottom {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.footer-cta__button,
+		.footer-nav a,
+		.footer-contact__link {
+			transition: none;
+		}
+	}
+</style>
