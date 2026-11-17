@@ -1,0 +1,23 @@
+---
+import Section from "./Section.astro";
+
+const steps = [
+	{ n: "01", title: "أدرس منتجك" },
+	{ n: "02", title: "أكتب المسودة" },
+	{ n: "03", title: "أصقلها حتى تبيع" },
+];
+---
+
+<Section tone="sand" id="process" class="paper-lines">
+	<h2 class="font-heading text-3xl font-bold md:text-4xl">كيف أكتب</h2>
+	<ol class="mt-10 grid gap-6 md:grid-cols-3">
+		{
+			steps.map((s) => (
+				<li class="fold-card p-8">
+					<span class="font-heading text-sm text-gold-soft">{s.n}</span>
+					<p class="font-quote mt-3 text-2xl text-espresso">{s.title}</p>
+				</li>
+			))
+		}
+	</ol>
+</Section>

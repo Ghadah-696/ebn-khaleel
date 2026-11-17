@@ -1,0 +1,22 @@
+---
+interface Props {
+  tone?: 'cream' | 'warm' | 'walnut' | 'sand' | 'caramel' | 'deep';
+  id?: string;
+  class?: string;
+}
+const { tone = 'cream', id, class: className = '' } = Astro.props;
+
+const tones = {
+  cream: 'bg-cream text-ink',
+  warm: 'bg-cream-warm text-espresso',
+  walnut: 'bg-walnut text-cream',
+  sand: 'bg-sand-deep text-espresso',
+  caramel: 'bg-caramel text-cream',
+  deep: 'bg-espresso-deep text-cream',
+};
+---
+<section id={id} class:list={[tones[tone], 'py-[clamp(4rem,8vw,7rem)]', className]}>
+  <div class="mx-auto w-full max-w-6xl px-5 md:px-8">
+    <slot />
+  </div>
+</section>

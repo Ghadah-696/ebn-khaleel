@@ -70,6 +70,28 @@
 	}
 }
 
+.paper-lines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 31px,
+    rgb(59 34 24 / 0.05) 31px 32px
+  );
+}
+
+.fold-card {
+  position: relative;
+  background: var(--color-cream);
+  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
+}
+.fold-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(to bottom right, transparent 50%, var(--color-gold-soft) 50%);
+}
 @media (prefers-reduced-motion: reduce) {
 	html {
 		scroll-behavior: auto;
